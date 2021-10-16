@@ -1,0 +1,22 @@
+.profile-img{
+    text-align: center;
+}
+.profile-img img{
+    height: 258px; 
+    width: 258px;
+}
+.profile-img .file {
+    position: relative;
+    overflow: hidden;
+    margin-top: -15%;
+    width: 70%;
+    border: none;
+    border-radius: 0;
+    font-size: 15px;
+}
+.profile-img .file input {
+    position: absolute;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}

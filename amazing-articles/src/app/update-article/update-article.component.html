@@ -1,0 +1,210 @@
+<div class="py-3 container-fluid">
+    <div *ngIf="errorMsg" class="alert alert-danger text-white bg-danger">
+        *{{errorMsg}}
+    </div>
+    <!-- Update Article Card -->
+    <form [formGroup]="updateArticleForm" class="form" (ngSubmit)="updateArticle(childTextEditor)" 
+        novalidate enctype="multipart/form-data">
+        <div class="card bg-dark text-white border border-dark">
+            <div class="card-header border-bottom text-center border-light">
+                <a routerLink="/my-articles" class="text-white float-left" style="cursor: pointer;">
+                    <mat-icon>west</mat-icon>
+                </a>
+                <h3 class="text-khaki mb-0">Update Article</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg">
+                        <!--Cover Image-->
+                        <div class="pb-3 text-center">
+                            <img id="img-tag"
+                                class="img-thumbnail"
+                                [src]="sourceImagePath" 
+                                width="960" height="315">
+                        </div>
+                        <!--Upload cover image-->
+                        <div class="pb-3 form-group">
+                            <label class="input-group-text bg-dark text-white" for="input-tag">
+                                <mat-icon class="mr-2">image</mat-icon>
+                                Upload cover image
+                            </label>
+                            <input class="form-control j-input-dark text-white" type="file" name="coverImage"
+                                id="input-tag" onchange="loadSelectedImage()" 
+                                (change)="handleFileInput($event.target.files)" 
+                                accept="image/*" required>
+                            <input type="hidden" name="coverImagePath" formControlName="coverImagePath">
+                            <small [class.d-none]="coverImagePath.valid || coverImagePath.untouched" class="text-warning">
+                                *Cover image is required
+                            </small>
+                        </div>
+                        <!--Theme colour-->
+                        <div class="pb-4 input-group">
+                            <label class="form-control form-label input-group-text bg-dark text-white" for="themeColour">
+                                <mat-icon class="mr-2">palette</mat-icon>
+                                Theme Colour
+                            </label>
+                            <input type="color" id="themeColour" 
+                                formControlName="themeColour" name="themeColour" 
+                                class="form-control form-control-color j-input-dark text-white" required
+                                title="Select your article's theme colour" value="#FFFF00">
+                        </div>
+                        <!--Title-->
+                        <div class="pb-3 form-group">
+                            <label class="input-group-text bg-dark text-white" for="title">
+                                <mat-icon class="mr-2">title</mat-icon>
+                                Title
+                            </label>
+                            <input formControlName="title" name="title" class="form-control text-white j-input-dark"
+                                placeholder="Give a suitable title to your article"
+                                required
+                                [class.is-invalid]="title.invalid && title.touched">
+                            <div *ngIf="title.invalid && title.touched">
+                                <small class="text-warning" *ngIf="title.errors?.required">
+                                    *Title is required
+                                </small>
+                                <small class="text-warning" *ngIf="title.errors?.maxlength">
+                                    *Title length should not exceed 70 characters
+                                </small>
+                            </div>
+                        </div>
+                        <!--Subject-->
+                        <div class="pb-3 form-group">
+                            <label class="input-group-text bg-dark text-white" for="subject">
+                                <mat-icon class="mr-2">subject</mat-icon>
+                                Subject
+                            </label>
+                            <input type="text"
+                                name="subject" class="form-control j-input-dark text-white" required
+                                placeholder="Article must belong to a subject"
+                                matInput
+                                [formControl]="subjectControl"
+                                [matAutocomplete]="auto"
+                                [class.is-invalid]="subjectControl.invalid && subjectControl.touched">
+                            <mat-autocomplete class="bg-dark text-white" #auto="matAutocomplete">
+                                <mat-option class="j-input-dark text-white" *ngFor="let option of filteredOptions | async;"
+                                    [value]="option">
+                                    {{option}}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <div *ngIf="subjectControl.invalid && subjectControl.touched">
+                                <small class="text-warning" *ngIf="subjectControl.errors?.required">
+                                    *Subject is required
+                                </small>
+                                <small class="text-warning" *ngIf="subjectControl.errors?.maxlength">
+                                    *Subject length should not exceed 50 characters
+                                </small>
+                            </div>
+                        </div>
+                        <!--Short Intro-->
+                        <div class="pb-3 form-group">
+                            <label class="input-group-text bg-dark text-white" for="shortIntro">
+                                <mat-icon class="mr-2">short_text</mat-icon>
+                                Short Intro
+                            </label>
+                            <input type="text" formControlName="shortIntro" name="shortIntro" 
+                                class="form-control j-input-dark text-white"
+                                placeholder="Short introductory line of the article">
+                            <div *ngIf="shortIntro.invalid && shortIntro.touched">
+                                <small class="text-warning" *ngIf="shortIntro.errors?.maxlength">
+                                    *Short intro length should not exceed 180 characters
+                                </small>
+                            </div>
+                        </div>
+                        <!--Tags-->
+                        <div class="mb-0 form-group">
+                            <label class="input-group-text bg-dark text-white" for="tags">
+                                <mat-icon class="mr-2">tag</mat-icon>
+                                Tags
+                            </label>                                                  
+                            <mat-form-field class="example-chip-list text-white" appearance="outline">
+                                <mat-chip-list #chipList>
+                                    <mat-chip [style.backgroundColor]="themeColour.value" selected *ngFor="let tag of tags.controls"
+                                        [selectable]="selectable" [removable]="removable" (removed)="remove(tag)">
+                                        {{tag.value}}
+                                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                    </mat-chip>
+                                </mat-chip-list> 
+                                <input name="tags" 
+                                    formArrayName="tags" type="text"
+                                    class="w-100 text-white j-input-dark"
+                                    placeholder="Keywords of this article. Press COMMA to generate tags" 
+                                    [matChipInputFor]="chipList"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" 
+                                    [matChipInputAddOnBlur]="addOnBlur"
+                                    (matChipInputTokenEnd)="add($event)">
+                            </mat-form-field>
+                        </div>
+                        <!--Content-->
+                        <div class="form-group">
+                            <label class="input-group-text bg-dark text-white" for="content">
+                                <mat-icon class="mr-2">article</mat-icon>
+                                Content
+                            </label>
+                            <!-- Using text editor component as child component -->
+                            <app-text-editor #childTextEditor></app-text-editor>
+                            <!-- Using event approach-->
+                            <!-- <app-text-editor (childEvent)="contentData=$event"></app-text-editor> -->
+                            <input type="hidden" formControlName="content" name="content" > 
+                            <small [class.d-none]="content.valid || content.untouched" class="text-warning">
+                                *Content is required
+                            </small>
+                        </div>
+                        <!--Reading time-->
+                        <div class="form-group">
+                            <label class="input-group-text bg-dark text-white" for="readingTime">
+                                <mat-icon class="mr-2">timer</mat-icon>
+                                Reading Time
+                            </label>
+                            <input type="number" formControlName="readingTime" name="readingTime" 
+                                class="form-control j-input-dark text-white" required
+                                placeholder="Time taken (in minutes) for reading this article"
+                                [class.is-invalid]="readingTime.invalid && readingTime.touched">
+                            <div *ngIf="readingTime.invalid && readingTime.touched">
+                                <small class="text-warning" *ngIf="readingTime.errors?.required">
+                                    *Reading time is required
+                                </small>
+                                <small class="text-warning" *ngIf="readingTime.errors?.min">
+                                    *Reading time should not be less than 2 minutes
+                                </small>
+                                <small class="text-warning" *ngIf="readingTime.errors?.max">
+                                    *Reading time should not exceed 45 minutes
+                                </small>
+                            </div>
+                        </div>
+                        <!--References-->
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label class="form-control input-group-text bg-dark text-white" for="content">
+                                    <mat-icon class="mr-2">source</mat-icon>
+                                    References
+                                </label> 
+                                <div class="input-group-append">
+                                    <button type="button" class="input-group-text bg-dark text-white" (click)="addReference()">
+                                        <mat-icon>add</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="mt-2 input-group" formArrayName="references" 
+                                *ngFor="let r of references.controls; let i = index">
+                                <input type="text" 
+                                    [formControlName]="i" name="references" 
+                                    class="form-control j-input-dark text-white" required
+                                    placeholder="Add references/links to the sources referred">
+                                <div class="input-group-append">
+                                    <button type="button" class="input-group-text bg-dark text-white" (click)="removeReference(i)">
+                                        <mat-icon>close</mat-icon>
+                                    </button>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" mat-raised-button class="bg-primary text-white">
+                        Update
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

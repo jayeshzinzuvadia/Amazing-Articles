@@ -1,0 +1,10 @@
+/*Adding a caption*/
+figcaption{
+    text-align: center;
+    font-size: 18px;
+    color: white;
+    background-color: #141414;
+    opacity: 82%;
+    padding: 10px;
+    border-radius: 28px;
+}

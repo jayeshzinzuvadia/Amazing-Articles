@@ -1,0 +1,140 @@
+<mat-tab-group color="accent" animationDuration="0ms" class="mt-2 text-white" mat-align-tabs="center">
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon color="warn" class="example-tab-icon">favorite</mat-icon>
+            Articles
+        </ng-template>
+        <div class="container" *ngIf="articlesFlag">
+            <!--Saved Articles-->
+            <article class="maincontent">
+                <div class="mt-0 row">
+                    <!--For loop here-->
+                    <div class="mb-2 col-lg-6" *ngFor="let article of savedArticleList; let aid = index;">
+                        <!--Article card-->
+                        <div class="card bg-dark text-white">
+                            <!--Article cover image-->
+                            <img class="j-cover-img-style" [src]="article.coverImagePath">
+                            <!--Writing on top of image-->
+                            <div class="card-img-overlay d-flex flex-column align-items-start">
+                                <!--Title-->
+                                <div class="mb-auto article-title card-title text-capitalize d-inline-block
+                                    text-wrap text-truncate display-4 text-left">
+                                    {{article.title}}
+                                </div>
+                                <!--ShortIntro and Read article FAB-->
+                                <div class="mb-5 container">
+                                    <div class="d-flex flex-row">
+                                        <div class="card-text float-left">
+                                            <p class="overflow-hidden">{{article.shortIntro}}</p>
+                                        </div>
+                                        <div class="ml-auto mb-3 bottom-right">
+                                            <button mat-fab [style.backgroundColor]="article.themeColour"
+                                                [style.hover]="true"
+                                                (click)="navigateToReadArticle(article._id)"
+                                                title="Read this article"
+                                                type="button">
+                                                <mat-icon>arrow_forward_ios</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Card footer-->
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-3 text-center input-group">
+                                        <mat-icon id={{article._id}}
+                                            style="cursor: default;"
+                                            color="warn" class="icon_size"
+                                            title="Unlike this article"
+                                            (click)="unlikeArticle(aid,article)">
+                                            {{viewLikeArticleList[aid]}}
+                                        </mat-icon>
+                                        &nbsp;{{article.likes}} 
+                                    </div>
+                                    <div class="col-3 text-center input-group">
+                                        <mat-icon class="text-khaki icon_size" style="cursor: default;"
+                                            title="Reading time">
+                                            timer
+                                        </mat-icon>
+                                        &nbsp;{{article.readingTime}} min
+                                    </div>
+                                    <div class="col text-center input-group text-capitalize">
+                                        <mat-icon class="text-warning icon_size" style="cursor: default;"
+                                            title="Author">
+                                            lightbulb_outline
+                                        </mat-icon> 
+                                        &nbsp;{{article.author.name}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+        <div *ngIf="!articlesFlag" class="mt-2 alert alert-dark text-white bg-dark">
+            Empty reading list
+        </div>
+    </mat-tab>
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="text-warning example-tab-icon">bookmark</mat-icon>
+            Subjects
+        </ng-template>
+        <div class="container" *ngIf="subjectsFlag">
+            <!--Saved Subjects-->
+            <article class="maincontent">
+                <div class="mt-2 row">
+                    <!--For loop here-->
+                    <div class="mb-2 col-lg-6" *ngFor="let subject of savedSubjectList; let sid = index;">
+                        <div class="row m-1">
+                            <!--subject card-->
+                            <div class="card bg-dark text-white">
+                                <!--subject cover image-->
+                                <img class="j-subject-cover-img-style" src='{{subject.coverImagePath}}'>
+                                <!--Writing on top of image-->
+                                <div class="card-img-overlay d-flex flex-column align-items-start">
+                                    <!--Subject Name-->
+                                    <div class="mb-auto subject-title card-title text-capitalize d-inline-block
+                                        text-wrap text-truncate display-4 text-left">
+                                        {{subject.subjectName}}
+                                    </div>
+                                    <!--Read subject FAB-->
+                                    <div class="mb-5 container">
+                                        <div class="float-right">
+                                            <button mat-fab [style.backgroundColor]="subject.themeColour"
+                                                [style.hover]="true"
+                                                (click)="navigateToReadSubject(subject._id)"
+                                                title="Read this subject">
+                                                <mat-icon>arrow_forward_ios</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Card footer-->
+                                <div class="card-footer">
+                                    <div class="row">
+                                        <div class="col text-center input-group">
+                                            <mat-icon id={{subject._id}}
+                                                style="cursor: default;"
+                                                class="text-warning icon_size"
+                                                title="Follow this subject"
+                                                (click)="unfollowSubject(sid,subject)">
+                                                {{viewFollowSubjectList[sid]}}
+                                            </mat-icon>
+                                            &nbsp;{{subject.followers}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+        <div *ngIf="!subjectsFlag" class="mt-2 alert alert-dark text-white bg-dark">
+            Empty following list
+        </div>
+    </mat-tab>
+</mat-tab-group>

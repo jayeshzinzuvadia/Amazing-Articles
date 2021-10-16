@@ -1,0 +1,91 @@
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark j-dark">
+        <div class="container">
+            <table class="table-borderless d-md-none">
+                <tr>
+                    <th>
+                        <a class="navbar-brand text-light text-center" href="#">
+                            <img src="../assets/static/amazing-articles-logo.png" alt="Amazing Articles Logo"
+                                class="img-fluid">
+                        </a>
+                    </th>
+                    <th>
+                        &nbsp;
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </th>
+                </tr>
+            </table>
+
+            <!--Main tabs-->
+            <div class="collapse navbar-collapse text-center w-100" id="navbarNav">
+                <ul class="nav navbar-nav w-100">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/articles" routerLinkActive="active">Articles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/discover" routerLinkActive="active">Discover</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!--Logo at center-->
+            <a class="navbar-brand order-first order-md-0 mx-0 d-none d-md-block" routerLink="/home"
+                routerLinkActive="active">
+                <img src="../assets/static/amazing-articles-logo.png" alt="Amazing Articles Logo" class="img-fluid">
+            </a>
+
+            <!--Auth tabs-->
+            <div class="collapse navbar-collapse text-center w-100" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" *ngIf="!loggedIn()" routerLink="/login" routerLinkActive="active">
+                            Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" *ngIf="!loggedIn()" routerLink="/register"
+                            routerLinkActive="active">
+                            Register
+                        </a>
+                    </li>
+                    <!--User tabs-->
+                    <li class="nav-item">
+                        <a class="nav-link" *ngIf="loggedIn()" routerLink="/saved" routerLinkActive="active">
+                            Saved
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown" *ngIf="loggedIn()">
+                        <a class="nav-link dropdown-toggle" style="cursor: pointer;" 
+                            id="navbarDropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button">
+                            <!-- <img class="rounded-circle img-responsive" src="../assets/profile/default.png" height="50px" width="50px"> -->
+                            Account
+                        </a>
+                        <div class="dropdown-menu bg-dark text-center" aria-labelledby="navbarDropdown1">
+                            <a class="dropdown-item bg-dark nav-link" routerLink="/profile" routerLinkActive="active">My Profile</a>
+                            <a class="dropdown-item bg-dark nav-link" routerLink="/my-articles" routerLinkActive="active">My Articles</a>                            
+                            <a class="dropdown-item bg-dark nav-link" style="cursor: pointer;"
+                                (click)="logoutUser()" routerLinkActive="active">
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!--Adding Styling-->
+        <!-- <div class="d-none d-lg-block">
+            <img style="position: absolute; left:3.3rem; z-index: 3" src="../assets/static/PUL_42_plants01_1_cropped.9fbabc426824.png" alt="decorative plant illustration left 1" class="img-fluid">
+            <img style="position: absolute; left:1rem; z-index: 1; max-height: 25rem;" src="../assets/static/PUL_42_plants01_3_cropped.685cd9a79821.png" alt="decorative plant illustration left 2" class="img-fluid">
+            <img style="position: absolute; left:0rem; z-index: 2; max-height: 20rem;" src="../assets/static/PUL_42_plants02_5_cropped.9f788901ec64.png" alt="decorative plant illustration left 3" class="img-fluid">
+            <img style="position: absolute; right:3.5rem; z-index: 3" src="../assets/static/PUL_42_plants01_1_cropped.9fbabc426824.png" alt="decorative plant illustration right 1" class="img-fluid">
+            <img style="position: absolute; right:0rem; z-index: 2; max-height: 25rem;" src="../assets/static/PUL_42_plants01_3_cropped.685cd9a79821.png" alt="decorative plant illustration right 2" class="img-fluid">
+            <img style="position: absolute; right:2rem; z-index: 1; max-height: 20rem;" src="../assets/static/PUL_42_plants02_5_cropped.9f788901ec64.png" alt="decorative plant illustration right 3" class="img-fluid">
+        </div> -->
+    </nav>
+</header>
+<div class="container">
+    <router-outlet></router-outlet>
+</div>

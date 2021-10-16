@@ -1,0 +1,101 @@
+<div class="py-3 container-fluid">
+  <div class="row">
+    <div class="col">
+      <div *ngIf="errorMsg" class="alert alert-danger text-white bg-danger">
+        *{{errorMsg}}
+      </div>      
+      <!-- Register Card -->
+      <div class="card bg-dark text-white border border-dark">
+        <div class="card-header border-bottom border-light">
+          <h3 class="text-center mb-0">Register</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="registrationForm" class="form" (ngSubmit)="registerUser()" novalidate enctype="multipart/form-data"> 
+            <!-- {{registrationForm.value | json}} -->
+            <div class="row">
+              <div class="col-lg-5">
+                <div class="text-center">
+                  <div class="profile-img">
+                    <img class="rounded-circle" id="img-tag" src="../../assets/static/default.png">
+                    <div class="file btn btn-lg j-input-dark text-white">
+                      Upload Profile Picture
+                      <input type="file" name="profilePicture"
+                        id="input-tag"  onchange="loadSelectedImage()"
+                        (change)="handleFileInput($event.target.files)" accept="image/*"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-7">
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" name="name" class="form-control j-input-dark text-white"
+                    placeholder="Firstname Lastname" [class.is-invalid]="name.invalid && name.touched"
+                    formControlName="name" required>
+                  <small [class.d-none]="name.valid || name.untouched" class="text-warning">
+                    *Name is required
+                  </small>
+                </div>
+                <div class="form-group">
+                  <label for="bio">Bio</label>
+                  <textarea class="form-control j-input-dark text-white" rows="2"
+                    placeholder="Tell us about yourself" formControlName="bio"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="dateOfBirth">Date of Birth</label>
+                  <input type="date" name="dateOfBirth" class="form-control j-input-dark text-white" 
+                    formControlName="dateOfBirth" required
+                    [class.is-invalid]="dateOfBirth.invalid && dateOfBirth.touched">
+                  <small class="text-warning" [class.d-none]="dateOfBirth.valid || dateOfBirth.untouched">
+                    *Date of Birth is required
+                  </small>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="text" name="email" class="form-control j-input-dark text-white" required
+                    pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                    placeholder="For example - amazing@example.com"
+                    [class.is-invalid]="email.invalid && email.touched" 
+                    formControlName="email">
+                  <!-- <small class="text-warning" [class.d-none]="email.valid || email.untouched">
+                    *Email is required
+                  </small> -->
+                  <div *ngIf="email.invalid && email.touched">
+                    <small class="text-warning" *ngIf="email.errors?.required">
+                      *Email is required
+                    </small>
+                    <small class="text-warning" *ngIf="email.errors?.pattern">
+                      *Invalid Email
+                    </small>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input type="password" name="password" class="form-control j-input-dark text-white" required
+                    placeholder="Must be of atleast 8 characters" formControlName="password"
+                    [class.is-invalid]="password.invalid && password.touched">
+                  <!-- <small class="text-warning" [class.d-none]="password.valid || password.untouched">
+                    *Password is required
+                  </small> -->
+                  <div *ngIf="password.invalid && password.touched">
+                    <small class="text-warning" *ngIf="password.errors?.required">
+                      *Password is required
+                    </small>
+                    <small class="text-warning" *ngIf="password.errors?.minlength">
+                      *Password must be of at least 8 characters
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center pt-2">
+              <button type="submit" mat-raised-button class="bg-success">Register</button>
+            </div>
+          </form>
+        </div>
+        <!--/card-block-->
+      </div>
+      <!-- /Register Card -->
+    </div>
+  </div>
+</div>

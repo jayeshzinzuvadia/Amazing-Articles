@@ -1,0 +1,79 @@
+<!-- Search Box -->
+<div class="container mt-3">
+    <div class="input-group">
+        <!-- Search icon -->
+        <div class="input-group-prepend">
+            <span class="input-group-text bg-dark text-white" id="basic-addon1">
+                <mat-icon>search</mat-icon>
+            </span>
+        </div>
+        <!-- Search box -->
+        <input type="text" [(ngModel)]="searchString"
+            class="j-input-dark form-control text-white" 
+            placeholder="Search amazing articles/subjects/authors">
+    </div>
+</div>
+
+<!-- Display search results -->
+<article class="maincontent" *ngIf="searchString">
+    <h3 class="mt-2 text-khaki">Search Results</h3>
+    <div class="list-group">
+        <button *ngFor="let searchItem of searchList|filter: searchString" 
+            type="button" class="list-group-item bg-dark border text-white list-group-item-action"
+            (click)="navigateToSearchItem(searchItem)">
+            <i>{{searchItem.type}}</i> : {{searchItem.name}}
+            <div *ngIf="searchItem.author"><i>Author</i> : {{searchItem.author}}</div>
+        </button>
+    </div>
+</article>
+
+<!-- Show subjects -->
+<article class="maincontent" *ngIf="!searchString">
+    <h3 class="mt-2 text-khaki">Explore New Subjects</h3>
+    <div class="mt-2 row">
+        <!--For loop here-->
+        <div class="mb-2 col-lg-6" *ngFor="let subject of subjectList; let sid = index;">
+            <div class="row m-1">
+                <!--subject card-->
+                <div class="card bg-dark text-white">
+                    <!--subject cover image-->
+                    <img class="j-subject-cover-img-style" src='{{subject.coverImagePath}}'>
+                    <!--Writing on top of image-->
+                    <div class="card-img-overlay d-flex flex-column align-items-start">
+                        <!--Subject Name-->
+                        <div class="mb-auto subject-title card-title text-capitalize d-inline-block
+                            text-wrap text-truncate display-4 text-left">
+                            {{subject.subjectName}}
+                        </div>
+                        <!--Read subject FAB-->
+                        <div class="mb-5 container">
+                            <div class="float-right">
+                                <button mat-fab [style.backgroundColor]="subject.themeColour"
+                                    [style.hover]="true"
+                                    (click)="navigateToReadSubject(subject._id)"
+                                    title="Read this subject">
+                                    <mat-icon>arrow_forward_ios</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Card footer-->
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col text-center input-group">
+                                <mat-icon id={{subject._id}}
+                                    style="cursor: default;"
+                                    class="text-warning icon_size"
+                                    title="Follow this subject"
+                                    (click)="followOrUnfollowSubject(sid,subject)">
+                                    {{viewFollowSubjectList[sid]}}
+                                </mat-icon>
+                                &nbsp;{{subject.followers}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>

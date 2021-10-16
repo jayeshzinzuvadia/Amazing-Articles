@@ -1,0 +1,64 @@
+/* For articles component
+.maincontent {
+    font-size: 20px;
+    font-family: "Roboto", sans-serif;
+    padding: 10px 10px;
+} */
+
+/* Article Title */
+/* .article-title {
+    max-height: 150px; 
+    font-size: 42px;
+} */
+
+/* Article cover Image */
+/* .j-cover-img-style {
+    opacity : 90%;
+    max-width: 100%;
+    height: 500px;
+    /* height: 30vw; */
+    /* width: 100%; */
+    /* object-fit: cover; */
+/* } */
+/* .__img-style {
+    opacity : 85%;
+    width : 600px;
+    height: 520px;
+} */
+
+/* Icon size */
+/* .icon_size  {
+    font-size: 24px;
+} */
+
+/* Align items */
+/* .bottom-left {
+    position: absolute;
+    bottom: 100px;
+    left: 16px;
+}
+
+.top-left {
+    position: absolute;
+    top: 8px;
+    left: 16px;
+}
+
+.top-right {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+}
+
+.bottom-right {
+    position: absolute;
+    bottom: 70px;
+    right: 16px;
+}
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+} */

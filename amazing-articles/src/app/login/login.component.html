@@ -1,0 +1,51 @@
+<div class="py-5 container-fluid">
+  <div class="row">
+    <div class="col">
+      <div *ngIf="errorMsg" class="alert alert-danger text-white bg-danger">
+        *{{errorMsg}}
+      </div>
+
+      <!-- Login Card -->
+      <div class="card bg-dark text-white border border-dark">
+
+        <div class="card-header border-bottom border-light">
+          <h3 class="text-center mb-0">Login</h3>
+        </div>
+
+        <div class="card-body">
+          <!-- Login Form using Template Drive Form Approach-->
+          <form #userForm="ngForm" (ngSubmit)="loginUser(userForm)" class="form" novalidate>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="text" name="email" [(ngModel)]="loginForm.email" class="form-control j-input-dark text-white"
+                required #email="ngModel" [class.is-invalid]="email.invalid && email.touched"
+                (change)="validateEmail(email)">
+              <small class="text-warning" [class.d-none]="(email.valid || email.untouched) && !emailErrFlag">
+                *Email is required
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" name="password" [(ngModel)]="loginForm.password"
+                class="form-control j-input-dark text-white" required #password="ngModel"
+                [class.is-invalid]="password.invalid && password.touched" (change)="validatePassword(password)">
+              <small class="text-warning" [class.d-none]="(password.valid || password.untouched) && !passwordErrFlag">
+                *Password is required
+              </small>
+            </div>
+
+            <div class="text-center">
+              <button type="submit" mat-raised-button class="bg-warning">
+                Login
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+      <!-- /Login Card -->
+    </div>
+  </div>
+</div>

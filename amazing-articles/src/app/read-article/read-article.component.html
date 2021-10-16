@@ -1,0 +1,203 @@
+<!--Article content-->
+<div class="mt-2 card bg-dark text-white">
+    <!--Article cover image-->
+    <img class="j-cover-img-read-style" [src]="articleInfo.coverImagePath">
+    <!--Writing on top of cover image-->
+    <div class="card-img-overlay d-flex flex-column">
+        <!--Title and back arrow button-->
+        <div class="mb-auto text-center">
+            <mat-icon class="text-white cursor-pointer float-left" title="Back" (click)="backToPrevious()">west</mat-icon>
+            <h3 class="text-capitalize text-wrap text-truncate text-center">
+                {{articleInfo.title}}
+            </h3>
+            <!-- <h5 class="text-center">{{articleInfo.subject}}</h5> -->
+        </div>
+        <!--Tag chips view-->
+        <div class="mb-2 container d-flex flex-row justify-content-center">
+            <mat-chip-list #chipList *ngIf="articleInfo.tags">
+                <mat-chip [style.backgroundColor]="articleInfo.themeColour" selected *ngFor="let tag of articleInfo.tags">
+                    {{tag}}
+                </mat-chip>
+            </mat-chip-list>
+        </div>
+    </div>
+</div>
+<div class="card bg-dark text-white">
+    <!--Like article, share article link, reading time-->
+    <div class="card-header shadow container j-input-dark">
+        <div class="d-flex justify-content-between">
+            <!--Like/Unlike article-->
+            <div class="d-flex align-items-center">
+                <mat-icon color="warn" class="icon_size cursor-default"
+                    title="Like this article"
+                    id={{articleInfo._id}}
+                    (click)="likeOrUnlikeArticle()">
+                    {{viewLikeIcon}}
+                </mat-icon>
+                &nbsp;{{articleInfo.likes}}
+            </div>
+            <!--Share this article-->
+            <div class="d-flex align-items-center">
+                <mat-icon class="text-white icon_size cursor-default"
+                    title="Share this article link to others" (click)="shareArticleLink(articleInfo._id)">
+                    share
+                </mat-icon>
+            </div>
+            <!--Reading time-->
+            <div class="d-flex align-items-center">
+                <mat-icon class="text-khaki icon_size cursor-default"
+                    title="Reading time">
+                    timer
+                </mat-icon>
+                &nbsp;{{articleInfo.readingTime}} min
+            </div>
+        </div>
+    </div>
+
+    <!--Short intro of the article-->
+    <div *ngIf="articleInfo.shortIntro" class="card-body verticalLine fs-18 font-italic j-text-muted font-short-intro">
+        <blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;">{{articleInfo.shortIntro}}</blockquote>
+    </div>
+
+    <!-- Content section-->
+    <div class="container" (textSelect)="renderRectangles($event)">
+        <!--Content Only for display-->
+        <div class="card-body border-bottom font-content fs-18" 
+            id="displayContent">
+        </div>
+        <!--Dictionary view-->
+        <div *ngIf="hostRectangle"
+            class="indicator"
+            [style.left.px]="hostRectangle.left"
+            [style.top.px]="hostRectangle.top"
+            [style.width.px]="hostRectangle.width"
+            [style.height.px]="0">
+            
+            <!-- Content inside dictionary box -->
+            <div class="indicator__cta">
+                <div class="indicator_content"
+                    [style.backgroundColor]="articleInfo.themeColour"
+                    *ngIf="!wordDict.message">
+                    <!-- Dictionary Content -->
+                    <div class="card p-2" [style.backgroundColor]="articleInfo.themeColour">
+                        <div class="container border-bottom d-flex flex-row justify-content-center align-items-center">
+                            <mat-icon class="text-khaki">book</mat-icon>&nbsp;
+                            <div class="fs-22 p-1">Dictionary</div>
+                        </div>
+                        <!-- Speaker - Word - Phonetic -->
+                        <div class="container mt-2" *ngIf="wordDict.word">
+                            <div class="row d-flex flex-row align-items-center">
+                                <mat-icon class="text-white icon_size cursor-default"
+                                    (mousedown)="$event.preventDefault();"
+                                    (mouseover)=" playAudio(wordDict.phonetics.audio);"
+                                    (mouseup)="$event.stopPropagation(); shareSelection();">
+                                    volume_up
+                                </mat-icon>
+                                <div class="fs-22 font-weight-bold">&nbsp; {{wordDict.word}} &nbsp;</div>
+                                <div class="font-weight-light">{{"/"+wordDict.phonetics.text+"/"}}</div>
+                            </div>
+                        </div>
+                        <div class="container mt-2" *ngIf="!wordDict.word">
+                            Finding the meaning...
+                        </div>
+                        <!-- Parts of Speech - Meaning -->
+                        <div class="container" *ngFor="let meaning of wordDict.meanings">
+                            <!-- <audio src="{{wordDict.phonetics.audio}}"></audio> -->
+                            <blockquote class="font-italic mb-1">{{meaning.partOfSpeech}} &nbsp;</blockquote>
+                            <div *ngFor="let def of meaning.definitions; let id = index;">
+                                <div class="row">
+                                    <p class="col text-truncate">{{id+1}}. &nbsp; {{def.definition}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Author information-->
+    <div class="card-body border-bottom">
+        <div class="h4 d-flex flex-row justify-content-center">
+            <mat-icon class="text-warning">lightbulb_outline</mat-icon>
+            <div class="mr-auto h4">Author</div>
+        </div>
+        <div class="ml-5 mt-3 row d-flex flex-row justify-content-center">
+            <img class="rounded-circle" height="85" width="85" [src]="articleInfo.author.profilePicturePath">
+            <div class="col ml-3 text-center">
+                <div class="row h2">{{articleInfo.author.name}}</div>
+                <div class="row fs-18 font-italic" *ngIf="articleInfo.author.bio">~ {{articleInfo.author.bio}}</div>
+            </div>
+        </div>
+        <div class="mt-3 h5">Created on {{articleInfo.publishedDate | date: 'mediumDate'}}</div>
+    </div>
+
+    <!--References-->
+    <button class="card-header btn btn-dark border-bottom text-left text-white h4" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        <div class="d-flex flex-row justify-content-center">
+            <mat-icon class="mr-2 text-khaki icon_size">source</mat-icon>
+            <div class="mr-auto h4">References</div>
+            <div><mat-icon>expand_more</mat-icon></div>
+        </div>
+    </button>
+    <!--References data-->
+    <div class="collapse" id="collapseExample">
+        <div class="card bg-dark border-bottom card-body fs-18 text-white">
+            <div *ngIf="!articleInfo.references.length">
+                No references
+            </div>
+            <div *ngIf="articleInfo.references.length">
+                <div>Following links/sources have been referred for this article</div>
+                <div class="mt-3" *ngFor="let reference of articleInfo.references">
+                    <li><a class="ml-4" href="{{reference}}" target="_blank">{{reference}}</a></li>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Comments section-->
+    <button class="card-header btn btn-dark border-bottom text-left text-white h4" 
+        type="button" data-toggle="collapse" data-target="#commentsCollapse" 
+        aria-expanded="false" aria-controls="collapseExample">
+        <div class="d-flex flex-row justify-content-center">
+            <mat-icon class="mr-2 text-khaki icon_size">comment</mat-icon>
+            <div class="mr-auto h4">Comments</div>
+            <div><mat-icon>expand_more</mat-icon></div>
+        </div>
+    </button>
+    <!--Comments Data-->
+    <div class="collapse" id="commentsCollapse">
+        <div class="card bg-dark border-bottom card-body text-white">
+            <!-- Write Comment -->
+            <form class="form" [formGroup]="commentsForm" (ngSubmit)="addComment()">
+                <label class="form-label bg-dark text-white" for="message">
+                    Write Your Comments Below
+                </label>
+                <div class="input-group">
+                    <input type="text" class="form-control j-input-dark text-white" 
+                        name="message" formControlName="message"
+                        placeholder="Comment on this article">
+                    <button type="submit" class="input-group-append cursor-default input-group-text bg-dark text-white">
+                        <mat-icon>send</mat-icon>
+                    </button>
+                </div>
+            </form>
+            <!-- Comment History-->
+            <div class="mt-3 fs-24" *ngIf="articleInfo.comments.length">Comment History:-</div>
+            <!-- Comment loop -->
+            <div class="container">
+                <div class="mt-3 bg-dark text-white d-flex flex-row align-items-center" 
+                    *ngFor="let comment of articleInfo.comments">
+                    <img class="rounded-circle" height="60" width="60" [src]="comment.userProfilePicturePath">
+                    <div class="ml-4 col d-flex flex-column">
+                        <div class="fs-22 row d-flex flex-row">
+                            <div class="text-khaki">{{comment.userName}} &nbsp;</div>
+                            <div><small class="j-text-muted">on {{comment.timestamp | date: 'MMM d, y, h:mm a'}}</small></div>
+                        </div>
+                        <div class="fs-18 mt-2 row font-normal bg-dark text-white">{{comment.message}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

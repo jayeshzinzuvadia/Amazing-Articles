@@ -1,0 +1,110 @@
+<!--Subject content-->
+<div class="mt-2 card bg-dark text-white">
+    <!--Subject cover image-->
+    <img class="j-cover-img-read-style" [src]="subjectInfo.coverImagePath">
+    <!--Writing on top of cover image-->
+    <div class="card-img-overlay d-flex flex-column">
+        <!--Title and back arrow button-->
+        <div class="mb-auto text-center">
+            <mat-icon class="text-white cursor-pointer float-left" title="Back" (click)="backToPrevious()">west</mat-icon>
+            <h3 class="text-capitalize text-wrap text-truncate article-title-2 text-center">
+                Subject: {{subjectInfo.subjectName}}
+            </h3>
+        </div>
+    </div>
+</div>
+<!-- Subject Description, Article List, Author -->
+<div class="card bg-dark text-white">
+    <!--Follow subject, Share subject link and article count-->
+    <div class="card-header shadow container j-input-dark">
+        <div class="d-flex justify-content-between">
+            <!--Follow/Unfollow subject-->
+            <div class="d-flex align-items-center">
+                <mat-icon class="icon_size text-warning cursor-default"
+                    title="Follow this subject"
+                    id={{subjectInfo._id}}
+                    (click)="followOrUnfollowSubject()">
+                    {{viewFollowIcon}}
+                </mat-icon>
+                &nbsp;{{subjectInfo.followers}}
+            </div>
+            <!--Share this article-->
+            <div class="d-flex align-items-center">
+                <mat-icon class="text-white icon_size cursor-default"
+                    title="Share this subject link to others" (click)="shareSubjectLink(subjectInfo._id)">
+                    share
+                </mat-icon>
+            </div>
+            <!--Total Articles-->
+            <div class="d-flex align-items-center">
+                <mat-icon class="text-warning icon_size cursor-default"
+                    title="Total articles">
+                    article
+                </mat-icon>
+                &nbsp;{{subjectInfo.articleObjList.length}}
+            </div>
+        </div>
+    </div>
+
+    <!--Description of the subject-->
+    <div class="card-body fs-18 font-short-intro border-bottom">
+        <!-- Description title -->
+        <div class="h4 d-flex flex-row justify-content-center">
+            <mat-icon class="text-khaki">description</mat-icon>
+            <div class="mr-auto h4">&nbsp;Description</div>
+        </div>
+        <blockquote class="ml-5" style="margin: 0 0 0 40px; border: none; padding: 0px;">{{subjectInfo.description}}</blockquote>
+    </div>
+
+    <!--Articles belonging to this subject-->
+    <div class="card-body border-bottom">
+        <!-- Article title -->
+        <div class="h4 d-flex flex-row justify-content-center">
+            <mat-icon class="text-khaki">article</mat-icon>
+            <div class="mr-auto h4">&nbsp;Articles</div>
+        </div>
+        <div class="ml-5 font-short-intro fs-18 text-white" *ngIf="!subjectInfo.articleObjList.length">
+            No articles for this subject
+        </div>
+        <!--Article list loop-->
+        <div class="row">
+            <div class="col-lg-4 mt-2" *ngFor="let article of subjectInfo.articleObjList; let aid = index;">
+                <div class="container border text-white rounded">
+                    <div class="row">
+                        <!-- Article image on left -->
+                        <img class="rounded float-left" height="120" width="120" [src]="article.coverImagePath">
+                        <!-- Article title, likes and reading time -->
+                        <div class="pl-4 pt-2 col d-flex flex-column justify-content-between">
+                            <div class="row h5">
+                                <a class="text-khaki text-capitalize" target="_top" routerLink="/read-article/{{article._id}}">
+                                    {{article.title}}
+                                </a>
+                            </div>
+                            <div class="mb-2 row d-flex flex-row justify-content-between">
+                                <mat-icon class="j-text-muted cursor-default">favorite</mat-icon>
+                                <div class="mr-auto">&nbsp;{{article.likes}}</div>
+                                <mat-icon class="j-text-muted cursor-default">timer</mat-icon>
+                                <div class="mr-auto">&nbsp;{{article.readingTime}} min</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Author information-->
+    <div *ngIf="subjectInfo.userDefined" class="card-body border-bottom">
+        <div class="h4 d-flex flex-row justify-content-center">
+            <mat-icon class="text-warning">lightbulb_outline</mat-icon>
+            <div class="mr-auto h4">Author</div>
+        </div>
+        <div class="ml-5 mt-3 row d-flex flex-row justify-content-center">
+            <img class="rounded-circle" height="85" width="85" [src]="subjectInfo.author.profilePicturePath">
+            <div class="col ml-3 text-center">
+                <div class="row h2">{{subjectInfo.author.name}}</div>
+                <div class="row fs-18 font-italic" *ngIf="subjectInfo.author.bio">~ {{subjectInfo.author.bio}}</div>
+            </div>
+        </div>
+    </div>
+</div>

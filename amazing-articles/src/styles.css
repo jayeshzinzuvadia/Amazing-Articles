@@ -1,0 +1,180 @@
+/* You can add global styles to this file, and also import other style files */
+html, body { 
+    height: 100%; 
+}
+body { 
+    margin: 0; 
+    font-family: "Hind Siliguri", Roboto, "Helvetica Neue", sans-serif; 
+    background-color: #141718;
+}
+
+/* Image responsive */
+.j-img-responsive {
+    max-width: 100%; 
+    height: auto;
+}
+
+/* Text muted */
+.j-text-muted {
+    color: rgb(221, 204, 204) !important;
+}
+
+/* Vertical Line */
+.verticalLine {
+    border-left: thick solid rgb(221, 204, 204);
+}
+
+/* My Custom Colors */
+.j-dark {
+    background-color: #24272b !important;
+}
+.j-input-dark {
+    background-color: #272a32 !important;
+}
+.text-violet { 
+    color: violet;
+}
+.text-orange { 
+    color: orange; 
+}
+.text-pink { 
+    color: pink;
+}
+.text-magenta { 
+    color: magenta;
+}
+.text-khaki {
+    color: khaki; 
+}
+.text-brown { 
+    color: brown;
+}
+.text-greenyellow { 
+    color: greenyellow;
+}
+.text-goldenrod { 
+    color: goldenrod;
+}
+
+/* FAB Floating action button style */
+.fab-style {
+    position: fixed;
+    z-index: 100;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+}
+
+/* Main article style */
+/* For articles component */
+.maincontent {
+    font-size: 20px;
+    font-family: "Roboto", sans-serif;
+    padding: 10px 10px;
+}
+
+/* Default cursor */
+.cursor-default {
+    cursor: default;
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* Article Title */
+.article-title {
+    max-height: 150px; 
+    font-size: 42px;
+}
+.article-title-2 {
+    max-height: 150px; 
+    font-size: 36px;
+}
+.article-title-3 {
+    max-height: 150px; 
+    font-size: 28px;
+}
+
+/* Article cover Image */
+.j-cover-img-style {
+    opacity : 90%;
+    max-width: 100%;
+    height: 500px;
+    width: 100%;
+    object-fit: cover;
+}
+.j-cover-img-read-style {
+    opacity : 80%;
+    max-width: 100%;
+    height: 380px;
+    width: 100%;
+    object-fit: fill;
+}
+.j-subject-cover-img-style {
+    opacity : 90%;
+    max-width: 100%;
+    height: 380px;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* .__img-style {
+    opacity : 85%;
+    width : 600px;
+    height: 520px;
+} */
+
+/* Icon size */
+.icon_size  {
+    font-size: 24px;
+}
+
+/* Font styles */
+.font-short-intro {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.font-content {
+    font-family: 'Lucida Sans';
+    color: seashell;
+}
+.fs-18 {
+    font-size: 18px;
+}
+.fs-22 {
+    font-size: 22px;   
+}
+.fs-24 {
+    font-size: 24px;   
+}
+
+/* Align items */
+.bottom-left {
+    position: absolute;
+    bottom: 100px;
+    left: 16px;
+}
+
+.top-left {
+    position: absolute;
+    top: 8px;
+    left: 16px;
+}
+
+.top-right {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+}
+
+.bottom-right {
+    position: absolute;
+    bottom: 70px;
+    right: 16px;
+}
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

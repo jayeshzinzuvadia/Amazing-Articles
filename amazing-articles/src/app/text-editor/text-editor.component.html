@@ -1,0 +1,84 @@
+<div class="mt-3 row container">
+    <button type="button" onclick="format('undo')" class="btn btn-dark text-white" title="Undo">
+        <mat-icon>undo</mat-icon>
+    </button>
+    <button type="button" onclick="format('redo')" class="btn btn-dark text-white" title="Redo">
+        <mat-icon>redo</mat-icon>
+    </button>
+    <button type="button" onclick="format('bold')" class="btn btn-dark text-white" title="Bold">
+        <mat-icon>format_bold</mat-icon>
+    </button>
+    <button type="button" onclick="format('italic')" class="btn btn-dark text-white" title="Italic">
+        <mat-icon>format_italic</mat-icon>
+    </button>
+    <button type="button" onclick="format('underline')" class="btn btn-dark text-white" title="Underline">
+        <mat-icon>format_underlined</mat-icon>
+    </button>
+    <!--Format button groups-->
+    <div class="btn-group dropup">
+        <button type="button" class="btn btn-dark dropdown-toggle text-white" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" title="Align">
+            <mat-icon>format_align_left</mat-icon>
+        </button>
+        <div class="dropdown-menu bg-dark border text-white">
+            <button type="button" onclick="format('justifyLeft')" class="btn btn-dark text-white" title="Align left">
+                <mat-icon>format_align_left</mat-icon>
+            </button>
+            <button type="button" onclick="format('justifyCenter')" class="btn btn-dark text-white" title="Align center">
+                <mat-icon>format_align_center</mat-icon>
+            </button>
+            <button type="button" onclick="format('justifyRight')" class="btn btn-dark text-white" title="Align right">
+                <mat-icon>format_align_right</mat-icon>
+            </button>
+        </div>
+    </div>
+    <button type="button" onclick="format('insertunorderedlist')" class="btn btn-dark text-white" title="Bulleted list">
+        <mat-icon>format_list_bulleted</mat-icon>
+    </button>
+    <button type="button" onclick="format('insertorderedlist')" class="btn btn-dark text-white" title="Numbered list">
+        <mat-icon>format_list_numbered</mat-icon>
+    </button>
+    <button type="button" onclick="format('outdent')" class="btn btn-dark text-white" title="Indent left">
+        <mat-icon>format_indent_decrease</mat-icon>
+    </button>
+    <button type="button" onclick="format('indent')" class="btn btn-dark text-white" title="Indent right">
+        <mat-icon>format_indent_increase</mat-icon>
+    </button>
+    <button type="button" onclick="format('hiliteColor', 'green')" class="btn btn-dark text-white" title="Fill color">
+        <mat-icon>format_color_fill</mat-icon>
+    </button>
+    <button type="button" onclick="format('foreColor', 'yellow')" class="btn btn-dark text-white" title="Highlight text">
+        <mat-icon>format_color_text</mat-icon>
+    </button>
+    <button type="button" onclick="addEmoji('128512')" class="btn btn-dark text-white" title="Emoji">
+        <mat-icon>sentiment_satisfied_alt</mat-icon>
+    </button>
+    <button type="button" onclick="format('strikethrough')" class="btn btn-dark text-white" title="Strikethrough">
+        <mat-icon>strikethrough_s</mat-icon>
+    </button>
+    <button type="button" (click)="updateLinkFlag()" class="btn btn-dark text-white" title="Add hyperlink">
+        <mat-icon>add_link</mat-icon>
+    </button>
+    <button type="button" onclick="format('removeFormat')" class="btn btn-dark text-white" title="Remove format">
+        <mat-icon>format_clear</mat-icon>
+    </button>
+</div>
+<!--Dynamic HyperLink field content-->
+<div *ngIf="addLinkFlag" class="mb-2 mt-1 input-group">
+    <input id="txtFormatUrl" placeholder="To add hyperlink, put link here, select text and click on the link icon"
+        class="form-control j-input-dark text-white">
+    <div class="input-group-append">
+        <button type="button" onclick="setUrl()" class="input-group-text bg-dark text-white" title="Link">
+            <mat-icon>link</mat-icon>
+        </button>
+    </div>
+</div>
+<!--Text content-->
+<div class="mt-1 editor j-input-dark text-white fs-18" 
+    id="texteditor" 
+    contenteditable="true"
+    title="Write main content here..."
+    (change)="fireEvent()"></div>
+
+<!-- <button (click)="getTextData()" class="btn btn-warning">Click Me</button> -->
+<!-- <div class="text-white" id="content"></div> -->

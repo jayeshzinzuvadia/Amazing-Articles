@@ -1,0 +1,97 @@
+<!--Create subject and article buttons-->
+<div class="mt-3 text-center d-block d-xl-none">
+    <a class="btn btn-success mr-2" routerLink="/create-subject" title="Create new subject">
+        <!-- <mat-icon>subject</mat-icon>  -->
+        Create New Subject
+    </a>
+    <a class="btn btn-warning" routerLink="/create-article" title="Create new article">
+        <!-- <mat-icon>create</mat-icon>  -->
+        Create New Article
+    </a>
+</div>
+<!--For large screen sizes Laptops-->
+<div class="d-none d-xl-block">
+    <div class="fab-style" style="bottom: 80px; right: 15px;">
+        <a mat-fab class="bg-success" routerLink="/create-subject" title="Create new subject">
+            <mat-icon>subject</mat-icon>
+        </a>
+    </div>
+    <div class="fab-style" style="bottom: 15px; right: 15px;">
+        <a mat-fab class="bg-warning" routerLink="/create-article" title="Create new article">
+            <mat-icon>create</mat-icon>
+        </a>
+    </div>
+</div>
+
+<!--Article Posts-->
+<article class="maincontent">
+    <h3 class="mt-1 text-khaki">Daily Articles</h3>
+    <div class="mt-3 row">
+        <!--For loop here-->
+        <div class="mb-2 col-lg-6" *ngFor="let article of articleList; let aid = index;">
+            <!-- <div class="row m-1"> -->
+                <!--Article card-->
+                <div class="card bg-dark text-white">
+                    <!--Article cover image-->
+                    <img class="j-cover-img-style" [src]="article.coverImagePath">
+                    <!--Writing on top of image-->
+                    <div class="card-img-overlay d-flex flex-column align-items-start">
+                        <!--Title-->
+                        <div class="mb-auto article-title card-title text-capitalize d-inline-block
+                            text-wrap text-truncate display-4 text-left">
+                            {{article.title}}
+                        </div>
+                        <!--ShortIntro and Read article FAB-->
+                        <div class="mb-5 container">
+                            <div class="d-flex flex-row">
+                                <div class="card-text float-left">
+                                    <p class="overflow-hidden">{{article.shortIntro}}</p>
+                                </div>
+                                <div class="ml-auto mb-3 bottom-right">
+                                    <button mat-fab [style.backgroundColor]="article.themeColour"
+                                        [style.hover]="true"
+                                        (click)="navigateToReadArticle(article._id)"
+                                        title="Read this article"
+                                        type="button">
+                                        <mat-icon>arrow_forward_ios</mat-icon>
+                                    </button>
+                                    <!-- <a routerLink="/read-article" class="btn btn-danger" title="Click here to read full article">
+                                    </a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Card footer-->
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-3 text-center input-group">
+                                <mat-icon id={{article._id}}
+                                    style="cursor: default;"
+                                    color="warn" class="icon_size"
+                                    title="Like this article"
+                                    (click)="likeOrUnlikeArticle(aid,article)">
+                                    {{viewLikeArticleList[aid]}}
+                                </mat-icon>
+                                &nbsp;{{article.likes}} 
+                            </div>
+                            <div class="col-3 text-center input-group">
+                                <mat-icon class="text-khaki icon_size" style="cursor: default;"
+                                    title="Reading time">
+                                    timer
+                                </mat-icon>
+                                &nbsp;{{article.readingTime}} min
+                            </div>
+                            <div class="col text-center input-group text-capitalize">
+                                <mat-icon class="text-warning icon_size" style="cursor: default;"
+                                    title="Author">
+                                    lightbulb_outline
+                                </mat-icon> 
+                                &nbsp;{{article.author.name}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!-- </div> -->
+        </div>
+    </div>
+</article>

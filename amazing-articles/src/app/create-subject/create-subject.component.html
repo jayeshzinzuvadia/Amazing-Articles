@@ -1,0 +1,98 @@
+<div class="py-3 container-fluid">
+    <div *ngIf="errorMsg" class="alert alert-danger text-white bg-danger">
+        *{{errorMsg}}
+    </div>
+    <!-- Create New Subject Card -->
+    <form [formGroup]="createSubjectForm" class="form" (ngSubmit)="createSubject()" 
+        novalidate enctype="multipart/form-data">
+        <div class="card bg-dark text-white border border-dark">
+            <div class="card-header border-bottom text-center border-light">
+                <a routerLink="/articles" class="text-white float-left" style="cursor: pointer;">
+                    <mat-icon>west</mat-icon>
+                </a>
+                <h3 class="text-khaki mb-0">Create New Subject</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg">
+                        <!--Cover Image-->
+                        <div class="pb-3 text-center">
+                            <img id="img-tag"
+                                class="img-thumbnail"
+                                src="../../assets/static/subject_home.jpg" 
+                                width="960" height="315">
+                        </div>
+                        <!--Upload cover image-->
+                        <div class="pb-3 form-group">
+                            <label class="input-group-text bg-dark text-white" for="input-tag">
+                                <mat-icon class="mr-2">image</mat-icon>
+                                Upload cover image
+                            </label>
+                            <input class="form-control j-input-dark text-white" type="file" name="coverImage"
+                                id="input-tag" onchange="loadSelectedImage()" 
+                                (change)="handleFileInput($event.target.files)" 
+                                accept="image/*" required>
+                            <input type="hidden" name="coverImagePath" formControlName="coverImagePath">
+                            <small [class.d-none]="coverImagePath.valid || coverImagePath.untouched" class="text-warning">
+                                *Cover image is required
+                            </small>
+                        </div>
+                        <!--Theme colour-->
+                        <div class="pb-4 input-group">
+                            <label class="form-control form-label input-group-text bg-dark text-white" for="themeColour">
+                                <mat-icon class="mr-2">palette</mat-icon>
+                                Theme Colour
+                            </label>
+                            <input type="color" id="themeColour" 
+                                formControlName="themeColour" name="themeColour" 
+                                class="form-control form-control-color j-input-dark text-white" required
+                                title="Select your article's theme colour" value="#FFFF00">
+                        </div>
+                        <!--Subject-->
+                        <div class="pb-3 form-group">
+                            <label class="input-group-text bg-dark text-white" for="subjectName">
+                                <mat-icon class="mr-2">subject</mat-icon>
+                                Subject Name
+                            </label>
+                            <input formControlName="subjectName" name="subjectName" class="form-control text-white j-input-dark"
+                                placeholder="Give a suitable subject name"
+                                required
+                                [class.is-invalid]="subjectName.invalid && subjectName.touched">
+                            <div *ngIf="subjectName.invalid && subjectName.touched">
+                                <small class="text-warning" *ngIf="subjectName.errors?.required">
+                                    *Subject name is required
+                                </small>
+                                <small class="text-warning" *ngIf="subjectName.errors?.maxlength">
+                                    *Subject name length should not exceed 50 characters
+                                </small>
+                            </div>
+                        </div>
+                        <!--Description-->
+                        <div class="pb-2 form-group">
+                            <label class="input-group-text bg-dark text-white" for="description">
+                                <mat-icon class="mr-2">description</mat-icon>
+                                Description
+                            </label>
+                            <textarea type="text" formControlName="description" name="description" 
+                                class="form-control j-input-dark text-white"
+                                placeholder="Explain more about this subject" rows="5"></textarea>
+                            <div *ngIf="description.invalid && description.touched">
+                                <small class="text-warning" *ngIf="description.errors?.required">
+                                    *Description is required
+                                </small>
+                                <small class="text-warning" *ngIf="description.errors?.maxlength">
+                                    *Description length should not exceed 900 characters
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" mat-raised-button class="bg-success">
+                        Create
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

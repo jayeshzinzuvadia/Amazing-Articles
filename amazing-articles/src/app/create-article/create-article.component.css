@@ -1,0 +1,20 @@
+/* Angular material component styling */
+.example-chip-list {
+    width: 100%;
+}
+
+::ng-deep .mat-form-field-outline{
+    color:white;
+    background-color: #272a32;
+    border: 1px solid white;
+    border-radius: 7px;
+}
+
+::ng-deep .mat-input-element::placeholder{
+    color: #6c757d;
+    font-family: "Hind Siliguri", Roboto, "Helvetica Neue", sans-serif;
+}
+
+::ng-deep .mat-option.mat-active, .mat-option:hover:not(.mat-option-disabled) {
+    background-color: #6c757d !important;
+}
