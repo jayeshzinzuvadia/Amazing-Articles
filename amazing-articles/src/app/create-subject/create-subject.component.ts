@@ -88,7 +88,8 @@ export class CreateSubjectComponent implements OnInit {
       formData.append('subjectName', subject.subjectName);
       formData.append('description', subject.description);
       // temporary
-      formData.append('userDefined', "false");
+      // change userDefined to false when creating permanent subject
+      formData.append('userDefined', "true");
       formData.append('authorId', "");
 
       this._subject.createSubject(formData)
