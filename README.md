@@ -11,7 +11,7 @@ It is a learning website for the readers, where users can
 
 Thus, **"Read, Learn & Grow"**.
 
-## Project Demo Video : [Coming Soon]()
+## Project Demo Video : [Watch Amazing Articles in Action](https://drive.google.com/file/d/1Llqmyhz5HK5-4MxAUmDWgIdsxThlfOOP/view?usp=sharing)
 
 ## Features & Screenshots
 1. Home page
