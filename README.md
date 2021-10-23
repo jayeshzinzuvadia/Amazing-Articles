@@ -109,3 +109,5 @@ Follow this steps:
     cd .\amazing-articles\
     ng serve --open
 ```
+
+## [References](https://github.com/jayeshzinzuvadia/Amazing-Articles/blob/main/references.txt)
